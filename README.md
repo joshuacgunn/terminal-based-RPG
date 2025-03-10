@@ -1,0 +1,1 @@
+I decided to make this to improve my Java skills, as well as a way for me to become more creative. There's currently no 3d/GUI implementation, as I have finished the game yet. In the future I'll learn how to implement a GUI, but for now it's just terminal based.
