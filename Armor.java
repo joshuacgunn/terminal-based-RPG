@@ -7,15 +7,47 @@
  * @version Mar 10, 2025
  */
 public class Armor extends Item {
-    private int durability;
+    enum ArmorSlots {
+        HELMET {
+            @Override
+            public String toString(){
+                return "Helmet";
+            }
+        },
+        CHESTPLATE {
+            @Override
+            public String toString(){
+                return "Chestplate";
+            }
+        },
+        LEGGINGS {
+            @Override
+            public String toString(){
+                return "Leggings";
+            }
+        },
+        BOOTS {
+            @Override
+            public String toString(){
+                return "Boots";
+            }
+        }
+    }
     private int armorRating;
-    // 1: Helmet, 2: Chest, 3: Legs, 4: Full Outfit
-    private int piece;
+    private ArmorSlots slot;
 
-    public Armor(int durability, int armorRating, String name, double value, int piece) {
-        super(name, value);
-        this.durability = durability;
+    public Armor(int durability, int armorRating, String name, double value, ArmorSlots slot) {
+        super(name, value, durability);
         this.armorRating = armorRating;
-        this.piece = piece;
+        this.slot = slot;
+    }
+    public ArmorSlots getSlot() {
+        return this.slot;
+    }
+    public String armorName() {
+        return this.name;
+    }
+    public int getArmorRating() {
+        return this.armorRating;
     }
 }
