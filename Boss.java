@@ -6,21 +6,19 @@
  * @author  @joshuacgunn on GitHub
  * @version Feb 27, 2025
  */
-public class Boss {
+public class Boss extends Entity {
     private int hp;
-    private int power;
     private String name;
-    private boolean isAlive;
     private Weapon weapon;
+    protected EnemyType enemyType;
 
-    public Boss(int startingHP, int attack, String bossName, Weapon weapon) {
-        this.hp = startingHP;
-        this.power = attack;
-        this.name = bossName;
+    public Boss(int hp, String name, Weapon weapon) {
+        super(name);
+        this.hp = hp;
         this.weapon = weapon;
     }
 
     public void attack(Player player) {
-        player.takeDamage(weapon);
+        player.takeDamage(weapon.getDam());
     }
 }
