@@ -17,7 +17,7 @@ public class Dungeon {
     private DungeonFloor currentFloor;
     private int clearedFloors = 0;
     private ArrayList<Item> droppedItems = new ArrayList<>();
-    ArrayList<Player> pInDun = new ArrayList<>();
+    ArrayList<Entity> pInDun = new ArrayList<>();
 
     public Dungeon(String name, int floors, int bossFloorLevel) {
         if (bossFloorLevel == 0) {
@@ -72,7 +72,7 @@ public class Dungeon {
     public String getDungeonName() {
         return this.dungeonName;
     }
-    public ArrayList<Monster> getMonOnFloor() {
-        return this.getFloorList().get(this.getCurrentFloor()).getMonList();
+    public ArrayList<Entity> getMonOnFloor() {
+        return this.getFloorList().get(this.getCurrentFloor()).getEntities(); // Returns a list monsters on the players current floor. 
     }
 }
