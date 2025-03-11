@@ -1,15 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 public class Entity {
     private String name;
     private double armorRating;
     private double hp;
-    double attackSpeed;
-    double attackSpeedMax;
-    protected Dungeon dun;
-    ArrayList<Effect> activeEffects = new ArrayList<>();
+    protected double attackSpeed;
+    protected double attackSpeedMax;
+    protected Dungeon dun; // Current dungeon the entity is in, only useful for players but need it in this class
+    protected ArrayList<Effect> activeEffects = new ArrayList<>();
     protected ArrayList<Entity> allEntities = new ArrayList<>();
+    protected ArrayList<Armor> eqArmors = new ArrayList<>();
+    protected ArrayList<Item> inventory = new ArrayList<>();
     public Entity(String name) {
         this.name = name;
     }
@@ -31,7 +36,13 @@ public class Entity {
             this.hp -= finalDamage;
         }
         else if (this instanceof Monster) {
-
+            if (amount > this.hp) {
+                allEntities.remove(this);
+                System.out.println(this.getName() + " has died!");
+            }
+            else {
+                this.hp -= amount;
+            }
         }
         System.out.println(name + " took " + finalDamage + " damage!");
     }
@@ -44,7 +55,7 @@ public class Entity {
     public void addStatusEffect(Effect effect) {
         activeEffects.add(effect);
     }
-        public void processEndOfTurnEffects() {
+    public void processEndOfTurnEffects() {
         List<Effect> expiredEffects = new ArrayList<>();
         
         for (Effect effect : activeEffects) {
@@ -55,7 +66,6 @@ public class Entity {
                 expiredEffects.add(effect); // Mark for removal
             }
         }
-        
         // Remove expired effects
         activeEffects.removeAll(expiredEffects);
     }
@@ -69,12 +79,37 @@ public class Entity {
         this.dun = d;
         d.pInDun.add(this);
     }
-    public ArrayList<Entity> returnAllEntities() { // Returns all entities in the dungeon
+    // Returns all entities in the dungeon
+    public ArrayList<Entity> returnAllEntities() { 
         for (DungeonFloor n : dun.getFloorList()) {
             for (Entity m : n.getEntities()) {
                 allEntities.add(m);
             }
         }
         return allEntities;
+    }
+    public void equipArmor(Armor newArmor) {
+        OptionalInt existingIndex = IntStream.range(0, eqArmors.size())
+            .filter(i -> eqArmors.get(i).getSlot() == newArmor.getSlot())
+            .findFirst();
+        if (existingIndex.isPresent()) {
+            int index = existingIndex.getAsInt();
+            System.out.println("Unequipped" + eqArmors.get(index).getName() + " and put on " + newArmor.getName() + " in slot " + newArmor.getSlot().toString());
+            eqArmors.remove(eqArmors.get(index));
+            this.inventory.add(eqArmors.get(index));
+        }
+        else {
+            eqArmors.add(newArmor);
+        }
+    }
+    public void unEquipArmor(Armor oldArmor) {
+        boolean doesExist = eqArmors.stream()
+            .anyMatch(armor -> armor.getSlot() == oldArmor.getSlot());
+        if (doesExist) {
+            eqArmors.remove(eqArmors.indexOf(oldArmor));
+        }
+        else {
+            System.out.println("You don't have that equipped!");
+        }
     }
 }
