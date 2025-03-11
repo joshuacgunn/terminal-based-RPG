@@ -7,10 +7,13 @@ public class Entity {
     private double hp;
     double attackSpeed;
     double attackSpeedMax;
+    protected Dungeon dun;
     ArrayList<Effect> activeEffects = new ArrayList<>();
+    protected ArrayList<Entity> allEntities = new ArrayList<>();
     public Entity(String name) {
         this.name = name;
     }
+    // This is AI written. I could not think of a good way to calculate damage with armor.
     public void takeDamage(double amount) {
         // Apply armor penetration (percentage-based)
         double effectiveArmor = armorRating * (1.0 - amount);
@@ -21,11 +24,14 @@ public class Entity {
         
         // Ensure minimum damage
         finalDamage = Math.max(1, finalDamage);
-        if (finalDamage > this.hp) {
+        if (finalDamage > this.hp && this instanceof Player) {
             System.out.println("You died!");
         }
-        else {
+        else if (this instanceof Player) {
             this.hp -= finalDamage;
+        }
+        else if (this instanceof Monster) {
+
         }
         System.out.println(name + " took " + finalDamage + " damage!");
     }
@@ -58,5 +64,17 @@ public class Entity {
     }
     public void slowAttackSpeed(int magnitude) {
         this.attackSpeed = this.attackSpeed / magnitude;
+    }
+    public void enterDungeon(Dungeon d) {
+        this.dun = d;
+        d.pInDun.add(this);
+    }
+    public ArrayList<Entity> returnAllMonsters() { // Returns all monsters in the dungeon
+        for (DungeonFloor n : dun.getFloorList()) {
+            for (Entity m : n.getEntities()) {
+                allEntities.add(m);
+            }
+        }
+        return allEntities;
     }
 }
