@@ -69,7 +69,7 @@ public class Entity {
         this.dun = d;
         d.pInDun.add(this);
     }
-    public ArrayList<Entity> returnAllMonsters() { // Returns all monsters in the dungeon
+    public ArrayList<Entity> returnAllEntities() { // Returns all entities in the dungeon
         for (DungeonFloor n : dun.getFloorList()) {
             for (Entity m : n.getEntities()) {
                 allEntities.add(m);
