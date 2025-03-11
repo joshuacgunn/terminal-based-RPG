@@ -9,11 +9,10 @@
 public class Weapon extends Item {
     private double damage;
     private int durability;
-    private double armorPenetration;
+    protected double armorPenetration;
     public Weapon(String itemName, double value, int damage, int durability, double armorPenetration) {
-        super(itemName, value);
+        super(itemName, value, durability);
         this.damage = damage;
-        this.durability = durability;
         this.armorPenetration = armorPenetration;
     }
     // Returns the value of armorPenetration for use in other classes.
@@ -23,6 +22,7 @@ public class Weapon extends Item {
     public double getDam() {
         return this.damage;
     }
-    
-
+    public void setArPen(double amt) {
+        this.armorPenetration *= amt;
+    }
 }

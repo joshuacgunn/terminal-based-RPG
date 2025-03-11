@@ -13,7 +13,7 @@ public class DungeonFloor {
     private int monsterCount;
     private Dungeon currentDungeon;
     private int floor;
-    ArrayList<Monster> monsterList = new ArrayList<>();
+    ArrayList<Entity> entityList = new ArrayList<>();
     String[] monName = { "Orc", "Goblin", "Troll", "Skeleton" };
     Random rand = new Random();
 
@@ -23,7 +23,7 @@ public class DungeonFloor {
         this.floor = floorNumber;
         for (int n = monsterCount; n > 0; n--) {
             Monster monster = new Monster(monName[rand.nextInt(0, 4)]);
-            monsterList.add(monster);
+            entityList.add(monster);
         }
     }
     
@@ -35,7 +35,10 @@ public class DungeonFloor {
         return this.monsterCount;
     }
 
-    public ArrayList<Monster> getMonList() {
-        return monsterList;
+    public ArrayList<Entity> getEntities() {
+        return entityList;        
+    }
+    public void killEntity(Entity target) {
+        entityList.remove(target);
     }
 }

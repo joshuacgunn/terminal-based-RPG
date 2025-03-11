@@ -14,7 +14,7 @@ public class Monster extends Entity {
     protected EnemyType enemyType;
 
     // Constructor for the Monster object
-    public Monster(String name, EnemyType enemyType, int bossHp) {
+    public Monster(String name, EnemyType enemyType) {
         super(name);
         this.enemyType = enemyType;
         // Determines the HP and weapon for the different monsters you can encounter
@@ -22,15 +22,20 @@ public class Monster extends Entity {
             case GOBLIN:
                 this.hp = 15;
                 this.weapon = new Weapon("Club", 0, 15, 0, 0);
+                break;
             case ORC:
                 this.hp = 20;
                 this.weapon = new Weapon("Crude Sword", 0, 20, 0, 0.2);
+                break;
             case SKELETON:
                 this.hp = 5;
                 this.weapon = new Weapon("Bow", 0, 25, 0, 0.4);
+                break;
             case TROLL:
                 this.hp = 35;
                 this.weapon = new Weapon("Battleaxe", 0, 25, 0, 0.6);
+                break;
+            
     }
 }
 }
