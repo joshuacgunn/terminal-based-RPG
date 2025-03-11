@@ -6,7 +6,7 @@
  * @author  @joshuacgunn on GitHub
  * @version Feb 27, 2025
  */
-public class Monster {
+public class Monster extends Entity {
     // Fields
     private double hp;
     private String name;
@@ -14,6 +14,7 @@ public class Monster {
 
     // Constructor for the Monster object
     public Monster(String monsterName) {
+        super(monsterName);
         this.name = monsterName;
         // Determines the HP for the different monsters you can encounter
         if (monsterName.equals("Goblin")) {

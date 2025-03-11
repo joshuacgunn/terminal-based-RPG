@@ -11,14 +11,16 @@ public class Boss {
     private int power;
     private String name;
     private boolean isAlive;
+    private Weapon weapon;
 
-    public Boss(int startingHP, int attack, String bossName) {
+    public Boss(int startingHP, int attack, String bossName, Weapon weapon) {
         this.hp = startingHP;
         this.power = attack;
         this.name = bossName;
+        this.weapon = weapon;
     }
 
     public void attack(Player player) {
-        player.takeDamage(power);
+        player.takeDamage(weapon);
     }
 }

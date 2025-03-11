@@ -1,20 +1,26 @@
 import java.util.ArrayList;
-
-public class Player {
+/**
+ * TODO Write a one-sentence summary of your class here.
+ * TODO Follow it with additional details about its purpose, what abstraction
+ * it represents, and how to use it.
+ *
+ * @author  @joshuacgunn on GitHub
+ * @version Mar 10, 2025
+ */
+public class Player extends Entity {
     private double hp;
-    private int xp;
-    private String name;
+    private double xp;
+    protected String name;
     private ArrayList<Item> inventory = new ArrayList<>();
-    private double armorRating;
-    private String Class;
-    private Dungeon dun;
+    protected String Class;
+    protected Dungeon dun;
     private Item currentItem;
 
-    public Player(int startingXp, String name, String playerClass) {
-        this.xp = startingXp;
+    public Player(String name, String playerClass) {
+        super(name);
         this.name = name;
         this.hp = 100;
-        this.armorRating = 1;
+        this.setArmorRating(1);
         if (playerClass.equals("1")) {
             this.Class = "Mage";
         } else if (playerClass.equals("2")) {
@@ -29,26 +35,8 @@ public class Player {
         d.pInDun.add(this);
     }
     // This is AI written. I could not think of a good way to calculate damage with armor.
-    public void takeDamage(Weapon weapon) {
-        // Apply armor penetration (percentage-based)
-        double effectiveArmor = armorRating * (1.0 - weapon.getArPen());
-        
-        // Damage formula (same as before)
-        double damageMultiplier = 1.0 - (effectiveArmor / (effectiveArmor + 10.0));
-        double finalDamage = (weapon.getDam() * damageMultiplier);
-        
-        // Ensure minimum damage
-        finalDamage = Math.max(1, finalDamage);
-        if (finalDamage > this.hp) {
-            System.out.println("You died!");
-        }
-        else {
-            hp -= finalDamage;
-        }
-        System.out.println(name + " took " + finalDamage + " damage!");
-    }
     public void heal(double hpToAdd) {
-        if (hpToAdd > 100) {
+        if ((hp + hpToAdd) > 100) {
             hp = 100;
         } else {
             hp += hpToAdd;

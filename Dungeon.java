@@ -72,4 +72,7 @@ public class Dungeon {
     public String getDungeonName() {
         return this.dungeonName;
     }
+    public ArrayList<Monster> getMonOnFloor() {
+        return this.getFloorList().get(this.getCurrentFloor()).getMonList();
+    }
 }
