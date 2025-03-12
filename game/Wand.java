@@ -9,4 +9,7 @@ public class Wand extends Weapon {
         this.damage = damage;
         this.manaCost = manaCost;
     }
+    public Element getElement() {
+        return this.element;
+    }
 }

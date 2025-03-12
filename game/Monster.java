@@ -20,22 +20,21 @@ public class Monster extends Entity {
         // Determines the HP and weapon for the different monsters you can encounter
         switch (enemyType) {
             case GOBLIN:
-                this.hp = 15;
+                this.hp = 30;
                 this.weapon = new Weapon("Club", 0, 15, 0, 0);
                 break;
             case ORC:
-                this.hp = 20;
-                this.weapon = new Weapon("Crude Sword", 0, 20, 0, 0.2);
+                this.hp = 35;
+                this.weapon = new Weapon("Crude Sword", 0, 20, 0, 0.2f);
                 break;
             case SKELETON:
-                this.hp = 5;
-                this.weapon = new Weapon("Bow", 0, 25, 0, 0.4);
+                this.hp = 20;
+                this.weapon = new Weapon("Bow", 0, 25, 0, 0.4f);
                 break;
             case TROLL:
-                this.hp = 35;
-                this.weapon = new Weapon("Battleaxe", 0, 25, 0, 0.6);
+                this.hp = 50;
+                this.weapon = new Weapon("Battleaxe", 0, 25, 0, 0.6f);
                 break;
-            
+        }
     }
-}
 }

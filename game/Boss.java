@@ -9,7 +9,7 @@
 public class Boss extends Entity {
     private int hp;
     private String name;
-    private Weapon weapon;
+    private final Weapon weapon;
     protected EnemyType enemyType;
 
     public Boss(int hp, String name, Weapon weapon) {
@@ -17,8 +17,7 @@ public class Boss extends Entity {
         this.hp = hp;
         this.weapon = weapon;
     }
-
     public void attack(Player player) {
-        player.takeDamage(weapon.getDam());
+        player.takeDamage(weapon.getDamage());
     }
 }

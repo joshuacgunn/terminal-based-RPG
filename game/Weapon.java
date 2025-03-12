@@ -33,4 +33,16 @@ public class Weapon extends Item {
     }
     public int getDurability() {
         return this.durability;
+    }
+    private void breakWeapon(Weapon weapon) {
+        weapon.isBroken = true;
+    }
+    public void decrementDurability(Weapon weapon, int durability) {
+        if (!isUnbreakable && weapon.durability - durability > 0) {
+            this.durability -= durability;
+        }
+        else if (!isUnbreakable && weapon.durability - durability < 0) {
+            breakWeapon(weapon);
+        }
+    }
 }
