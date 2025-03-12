@@ -1,0 +1,57 @@
+TODO:
+Game Logic:
+- Eventually implement turn based logic, where certain methods are called every step; attack, effect tick, end of turn, etc.
+- Implement a way to save game state. I have no idea how I'd do this at the moment, but this will come after turn based logic is implemented.
+- Implement difficulty ranking for dungeons, each dungeon floor, enemies, bosses, and any future things like that.
+    - Difficulty for enemies and bosses should be calculated with a formula that takes hp, weapon damage/penetration, tier of the boss, etc into account
+    - Difficulty for dungeons should be calculated with a formula that takes all enemies and their difficulty, # of enemies in dungeon, etc into account
+    - Difficulty for certain floors should be calculated with a formula that takes the enemies on the floor and tier of enemy into account
+    - These difficulties should be displayed when a player encounters a dungeon, with the type of boss being displayed, except for bosses higher than Specific which should be displayed ???
+- Add an option to allow the player to try and run from a fight (maybe skip the current floor or have it make you leave the dungeon altogether)
+GUI Implementation:
+- This will be further down the line, I will most likely not do this until I've mostly completed the methods below. I also need to learn how to do this first.
+Spell.java:
+- Add method checkElement to make sure selected spell has the same element as current equipped wand.
+MageClass.java:
+- Implement a method to use a spell from playerSpells arraylist, and make a useWand method with parameter Spell, and use checkElement to validate input.
+Player.java:
+- Implement useSpell method from MageClass.java into damage calculation.
+- Add stats for different classes; e.g intellect for Mage, faith for Paladin, agility for Rogue (add more stats than just those), where you get a certain number of points to allocate per level.
+PaladinClass.java:
+- Complete this class - implement ability methods such as healingAbility, holyStrike, etc
+- Add blocking method: gives the player a chance to block an enemies attack. The damage negation from this should depend on shield strength (damage/armor penetration negation) and damage/armor penetration from enemy.
+ManaPotion.java:
+- Create class, mainly used for restoring mana to Mage manaPool variable.
+ManaPotion.java and HealingPotion.java:
+- After turn based logic is implemented, create methods to prevent players from using potions every turn; instead, make it only usable per 2 or 3 turns.
+All Classes:
+- Create a "super ability" method for each class with very long cooldown (maybe once per game or 30 turns). Mage - AOE attack that damages all enemies, Paladin - Self revive, Rogue - Hit only crits for a certain number of turns.
+RogueClass.java:
+- Implement dodging mechanic, with dodgeChance increasing every level of agility
+- Implement counterattack mechanic: low chance of player being hit by the enemy after a dodge. this should be balanced somehow, maybe by lowering the chance each level of agility or having certain armors that low the chance.
+Weapon.java:
+- Maybe change to interface for better functionality in calling methods from Wand.java and other future weapon classes that have specific abilities e.g. bow, legendary weapons, etc.
+Towns:
+- Create Towns.java with subclasses Tavern.java BlackSmith.java (where players can buy armor and only non-magical weapons), MagicStore.java (Specific to Mages, sells wands, spells, and any future mage gear).
+    - *SHOPS*:
+        - Each shop should sell a list of randomly generated items from a list
+        - Shops should have a limited amount of gold, prevents player from easily getting a lot of currency
+        - Shops should only accept the items they sell, so players cant sell items like swords and armor to the tavern or mageshop.
+    - *TAVERNS*
+        - Each tavern should have games to play, e.g farkle, poker, etc.
+        - Tavernkeeps should greet you with a set of options based on which class you are: Rogue: suspicious statement, e.g "Better not steal anything", Mage: remark about magic abilities, e.g "Don't break anything with those spells", Paladin: thank the player for keeping the peace and greet them, e.g "Welcome! Have a potion, on me (with a chance to actually get a free potion, depending on reputation)"
+
+Quests:
+- Add sidequests, get them from taverns, with a special reward upon completion.
+Boss.java:
+- Make this an interface instead of a class, which will help with expansion in the future.
+- Create methods like useSpecialAbility for Specific and higher bosses (maybe, depends on how many Specific bosses I make), with each boss having a different ability.
+- Create classes GenericBoss.java (A few boss options with varying difficulty levels and items), SpecificBoss.java (More bosses than last class, maybe make them dungeon specific or sidequest related), LegendaryBoss.java (Make these not able to be respawned in future dungeons, have these drop very good items, should only spawn in certain randomly generated dungeons), ExclusiveBoss.java (drop exclusive items, should only spawn in certain dungeons that only spawn when you have certain sidequests active that require you to hunt said boss, exceedingly difficult).
+Chest.java
+- Create this class, implement logic: rarity of items, - which should depend on difficulty of dungeon - different chest rarities, which should depend on difficulty of boss, etc - have a certain amount of currency in each chest, # rising with tier of rarity - different locked chests in dungeons that are unlocked with keys dropped from enemies.
+Items:
+- Make all items have different levels of rarity (Common-Uncommon-Rare-Epic-Legendary-Exclusive); damage should scale with rarity, and there should be more common items, with the # of items in a rarity lowering as you go along the scale, with rarer items like legendary items being exceedingly rare in higher difficulty dungeons, but with the bonus of being very powerful, and exclusive items only dropping from exclusive bosses.
+- Add currency.
+Monster.java:
+- Make each monster drop a certain amount of xp, could be based on difficulty ranking of enemy or enemy type.
+-
