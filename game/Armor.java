@@ -7,7 +7,7 @@
  * @version Mar 10, 2025
  */
 public class Armor extends Item {
-    enum ArmorSlots {
+    public enum ArmorSlots {
         HELMET {
             @Override
             public String toString(){
@@ -35,19 +35,19 @@ public class Armor extends Item {
     }
     private int armorRating;
     private ArmorSlots slot;
+    private int durability;
 
-    public Armor(int durability, int armorRating, String name, double value, ArmorSlots slot) {
-        super(name, value, durability);
+    public Armor(int durability, int armorRating, String name, float value, ArmorSlots slot) {
+        super(name, value);
         this.armorRating = armorRating;
         this.slot = slot;
+        this.durability = durability;
     }
     public ArmorSlots getSlot() {
         return this.slot;
     }
-    public String armorName() {
-        return this.name;
-    }
     public int getArmorRating() {
         return this.armorRating;
     }
+
 }

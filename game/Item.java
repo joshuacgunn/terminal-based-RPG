@@ -8,19 +8,17 @@
  */
 public class Item {
     protected String name;
-    protected double value;
+    protected float value;
     protected int durability;
 
-    public Item(String itemName, double value, int durability) {
+    public Item(String itemName, float value) {
         this.name = itemName;
         this.value = value;
-        this.durability = durability;
     }
-
     public String getName() {
         return this.name;
     }
-    public int getDurability() {
-        return this.durability;
+    public float getValue() {
+        return value;
     }
 }

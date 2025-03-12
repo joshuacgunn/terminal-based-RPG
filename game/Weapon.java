@@ -7,22 +7,30 @@
  * @version Mar 10, 2025
  */
 public class Weapon extends Item {
-    private double damage;
+    private final float damage;
     private int durability;
-    protected double armorPenetration;
-    public Weapon(String itemName, double value, int damage, int durability, double armorPenetration) {
-        super(itemName, value, durability);
+    protected float armorPenetration;
+    private boolean isUnbreakable = false;
+    private boolean isBroken;
+    public Weapon(String itemName, float value, float damage, int durability, float armorPenetration) {
+        super(itemName, value);
         this.damage = damage;
         this.armorPenetration = armorPenetration;
+        this.durability = durability;
+        if (this.durability == 0) {
+            isUnbreakable = true;
+        }
     }
     // Returns the value of armorPenetration for use in other classes.
-    public double getArPen() {
+    public float getArmorPenetration() {
         return this.armorPenetration;
     }
-    public double getDam() {
+    public float getDamage() {
         return this.damage;
     }
-    public void setArPen(double amt) {
+    public void multiplyArmorPenetration(float amt) {
         this.armorPenetration *= amt;
     }
+    public int getDurability() {
+        return this.durability;
 }
