@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 /**
  * TODO Write a one-sentence summary of your class here.
  * TODO Follow it with additional details about its purpose, what abstraction
@@ -8,7 +7,7 @@ import java.util.ArrayList;
  * @version Mar 10, 2025
  */
 public class Player extends Entity {
-    private double hp;
+    protected float critChance = this.calculateCritChance();
     private float hp;
     private int xp;
     protected String name;
@@ -16,22 +15,42 @@ public class Player extends Entity {
     protected Weapon currentItem;
     protected int level;
     protected XPCalculator xpCalculator;
+    private int agility;
+    public enum PlayerClass {
+        MAGE(MageClass.class),
+        PALADIN(PaladinClass.class),
+        ROGUE(RogueClass.class);
 
-    public Player(String name, String Class) {
+        private final Class<? extends Player> currentClass;
+        PlayerClass(Class<? extends Player> clazz) {
+            this.currentClass = clazz;
+            }
+        public Class<? extends Player> getAssociatedClass() {
+            return currentClass;
+            }
+        }
+    public Player(String name) {
         super(name);
         this.name = name;
         this.hp = 100;
         this.level = 1;
         this.xp = 0;
         this.setArmorRating(1);
-        if (Class.equals("1")) {
-            this.Class = "Mage";
-        } else if (Class.equals("2")) {
-            this.Class = "Paladin";
-        } else if (Class.equals("3")) {
-            this.Class = "Rogue";
+        switch(playerClass) {
+            case MAGE:
+                MageClass mage = new MageClass(name, playerClass);
+            case ROGUE:
+                RogueClass rogue = new RogueClass(name, playerClass);
+            case PALADIN:
+
         }
         this.xpCalculator = new XPCalculator();
+    }
+    public PlayerClass isClass() {
+        return this.playerClass;
+    }
+    public void setPlayerClass(PlayerClass Class) {
+        this.playerClass = Class;
     }
     public void addXP(int xp) {
         this.xp += xp;
@@ -47,11 +66,18 @@ public class Player extends Entity {
             xpNeeded = xpCalculator.calculateXPRequired(level);
         }
     }
-    public void heal(double hpToAdd) {
-        if ((hp + hpToAdd) > 100) {
-            hp = 100;
-        } else {
-            hp += hpToAdd;
+    public void levelUp() {
+        this.checkLevelUp();
+    }
+    public int getLevel() {
+        return this.level;
+    }
+    public void heal(HealingPotion potion) {
+        if (this.hp == 100) {
+            System.out.println("Your health is already 100!");
+        }
+        else if (this.hp + potion.getHealingFactor() > 100){
+            this.hp = 100;
         }
     }
     public void addToInv(Item item) {
@@ -63,11 +89,38 @@ public class Player extends Entity {
         }
     }
     public void getAllInfo() {
-        System.out.println("Xp: " + this.xp + ", " +"Hp: " + this.hp + ", " + "Name: " +  this.name + ", " + "Class: " + this.Class);
+        System.out.println("Xp: " + this.xp + ", " +"Hp: " + this.hp + ", " + "Name: " +  this.name + ", " + "Class: " + this.playerClass);
     }
     public void showInventory() {
         for (Item n : inventory) {
-            System.out.println(n.getName());
+            System.out.print(n.getName() + ", ");
         }
     }
-}
+    public float calculateCritChance() {
+        float baseCrit = 0.1f;
+        float agilityBonus = (float) Math.sqrt(this.agility) * 0.015f; // Raises crit chance by 1.5% per level of agility
+        return Math.min(baseCrit + agilityBonus, 0.30f);
+    }
+    public float calculateCritDamage() {
+        float baseMultiplier = 1.5f;
+        float bonus = this.level * 0.01f; // Raises crit damage by 1% per level
+        return baseMultiplier + Math.min(bonus, 0.5f);
+    }
+    public float calculateDamage() {
+        PlayerClass playerClass = this.playerClass;
+        switch (playerClass) {
+            case ROGUE:
+                float baseDamageRogue = this.currentItem.getDamage();
+                if (Math.random() < critChance) {
+                    float critMultiplier = this.calculateCritDamage();
+                    return baseDamageRogue * critMultiplier;
+                }
+                return baseDamageRogue;
+            case MAGE:
+                if (this.isClass() == PlayerClass.MAGE) {
+                    float baseDamageMage = ((Wand) currentItem).getDamage();
+                }
+                }
+        return 0.1f;
+        }
+    }
