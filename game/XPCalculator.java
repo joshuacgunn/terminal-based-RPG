@@ -1,10 +1,10 @@
 public class XPCalculator {
     private final int baseXP;
-    private final double power;
+    private final float power;
 
     public XPCalculator() {
         this.baseXP = 100;
-        this.power = 1.5;
+        this.power = 1.5f;
     }
 
     public int calculateXPRequired(int currentLevel) {

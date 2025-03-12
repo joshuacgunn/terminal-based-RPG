@@ -1,12 +1,12 @@
-public class Wand extends Weapon{
-    private int wandPower;
+public class Wand extends Weapon {
+    private float damage;
     private Element element;
     private int manaCost;
 
-    public Wand(String name, double value, int wandPower, Element element, int durability, double armorPenetration, int manaCost) {
-        super(name, value, wandPower, durability, armorPenetration);
+    public Wand(String name, float value, float damage, Element element, int durability, float armorPenetration, int manaCost) {
+        super(name, value, damage, durability, armorPenetration);
         this.element = element;
-        this.wandPower = wandPower;
+        this.damage = damage;
         this.manaCost = manaCost;
     }
 }

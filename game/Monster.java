@@ -8,7 +8,7 @@
  */
 public class Monster extends Entity {
     // Fields
-    private double hp;
+    private float hp;
     private String name;
     private Item weapon;
     protected EnemyType enemyType;

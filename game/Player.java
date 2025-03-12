@@ -9,9 +9,10 @@ import java.util.ArrayList;
  */
 public class Player extends Entity {
     private double hp;
+    private float hp;
     private int xp;
     protected String name;
-    protected String Class;
+    protected PlayerClass playerClass;
     protected Weapon currentItem;
     protected int level;
     protected XPCalculator xpCalculator;

@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 public class Entity {
-    private String name;
-    private double armorRating;
-    private double hp;
-    protected double attackSpeed;
-    protected double attackSpeedMax;
+    private final String name;
+    private float armorRating;
+    private float hp;
+    protected float attackSpeed;
+    protected float attackSpeedMax;
     protected Dungeon dun; // Current dungeon the entity is in, only useful for players but need it in this class
     protected ArrayList<Effect> activeEffects = new ArrayList<>();
     protected ArrayList<Entity> allEntities = new ArrayList<>();
@@ -19,13 +18,13 @@ public class Entity {
         this.name = name;
     }
     // This is AI written. I could not think of a good way to calculate damage with armor.
-    public void takeDamage(double amount) {
+    public void takeDamage(float amount) {
         // Apply armor penetration (percentage-based)
-        double effectiveArmor = armorRating * (1.0 - amount);
+        float effectiveArmor = armorRating * (1.0f - amount);
         
         // Damage formula (same as before)
-        double damageMultiplier = 1.0 - (effectiveArmor / (effectiveArmor + 10.0));
-        double finalDamage = (amount * damageMultiplier);
+        float damageMultiplier = 1.0f - (effectiveArmor / (effectiveArmor + 10.0f));
+        float finalDamage = (amount * damageMultiplier);
         
         // Ensure minimum damage
         finalDamage = Math.max(1, finalDamage);
@@ -46,7 +45,7 @@ public class Entity {
         }
         System.out.println(name + " took " + finalDamage + " damage!");
     }
-    public double getHp(Entity target) {
+    public float getHp(Entity target) {
         return target.hp;
     }
     public void setArmorRating(int amount) {
@@ -77,7 +76,7 @@ public class Entity {
     }
     public void enterDungeon(Dungeon d) {
         this.dun = d;
-        d.pInDun.add(this);
+        d.playersInDungeon.add(this);
     }
     // Returns all entities in the dungeon
     public ArrayList<Entity> returnAllEntities() { 

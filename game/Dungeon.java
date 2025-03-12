@@ -17,7 +17,7 @@ public class Dungeon {
     private DungeonFloor currentFloor;
     private int clearedFloors = 0;
     private ArrayList<Item> droppedItems = new ArrayList<>();
-    ArrayList<Entity> pInDun = new ArrayList<>();
+    ArrayList<Entity> playersInDungeon = new ArrayList<>();
 
     public Dungeon(String name, int floors, int bossFloorLevel) {
         if (bossFloorLevel == 0) {
