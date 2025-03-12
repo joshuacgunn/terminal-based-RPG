@@ -78,16 +78,18 @@ public class Entity {
         this.dun = d;
         d.playersInDungeon.add(this);
     }
+    public void leaveDungeon() {
+        dun.playersInDungeon.clear();
+        this.dun = null;
+    }
     // Returns all entities in the dungeon
     public ArrayList<Entity> returnAllEntities() { 
         for (DungeonFloor n : dun.getFloorList()) {
-            for (Entity m : n.getEntities()) {
-                allEntities.add(m);
-            }
+            allEntities.addAll(n.getEntities());
         }
         return allEntities;
     }
-    public void equipArmor(Armor newArmor) {
+    private void equipArmorValidation(Armor newArmor) {
         OptionalInt existingIndex = IntStream.range(0, eqArmors.size())
             .filter(i -> eqArmors.get(i).getSlot() == newArmor.getSlot())
             .findFirst();
@@ -101,11 +103,17 @@ public class Entity {
             eqArmors.add(newArmor);
         }
     }
-    public void unEquipArmor(Armor oldArmor) {
+    public void equipArmor(Armor armor) {
+        this.equipArmorValidation(armor);
+    }
+    public void unEquipArmor(Armor armor) {
+        this.unEquipArmorValidation(armor);
+    }
+    private void unEquipArmorValidation(Armor oldArmor) {
         boolean doesExist = eqArmors.stream()
             .anyMatch(armor -> armor.getSlot() == oldArmor.getSlot());
         if (doesExist) {
-            eqArmors.remove(eqArmors.indexOf(oldArmor));
+            eqArmors.remove(oldArmor);
         }
         else {
             System.out.println("You don't have that equipped!");
