@@ -1,1 +1,2 @@
-I decided to make this to improve my Java skills, as well as a way for me to become more creative. There's currently no 3d/GUI implementation, as I have finished the game yet. In the future I'll learn how to implement a GUI, but for now it's just terminal based.
+# Current state of the game
+It's not close to being done. I made a [todo list](https://github.com/joshuacgunn/terminal-based-RPG/blob/main/TODO.txt) to keep track of the features I want to add at the moment. Most of the current files are missing methods, logic, and many other things, as I am still in the process of learning Java, and I'm not exactly sure how I want to implement things. I'm also still learning GitHub so the homepage is very messy at the moment.
