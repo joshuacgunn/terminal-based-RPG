@@ -3,48 +3,38 @@
  * TODO Follow it with additional details about its purpose, what abstraction
  * it represents, and how to use it.
  *
- * @author  @joshuacgunn on GitHub
+ * @author <a href="https://github.com/joshuacgunn">Author</a>
  * @version Mar 10, 2025
  */
 public class Player extends Entity {
     protected float critChance = this.calculateCritChance();
-    private float hp;
-    private int xp;
+    protected int xp;
     protected String name;
     protected PlayerClass playerClass;
-    protected Weapon currentItem;
     protected int level;
     protected XPCalculator xpCalculator;
-    private int agility;
+    private final Inventory myInventory = super.inventory;
     public enum PlayerClass {
-        MAGE(MageClass.class),
-        PALADIN(PaladinClass.class),
-        ROGUE(RogueClass.class);
-
+        MAGE(ClassMage.class),
+        PALADIN(ClassPaladin.class),
+        ROGUE(ClassRogue.class);
         private final Class<? extends Player> currentClass;
+
         PlayerClass(Class<? extends Player> clazz) {
             this.currentClass = clazz;
-            }
+        }
         public Class<? extends Player> getAssociatedClass() {
             return currentClass;
-            }
         }
-    public Player(String name) {
+    }
+    public Player(String name, PlayerClass playerClass) {
         super(name);
         this.name = name;
-        this.hp = 100;
         this.level = 1;
         this.xp = 0;
-        this.setArmorRating(1);
-        switch(playerClass) {
-            case MAGE:
-                MageClass mage = new MageClass(name, playerClass);
-            case ROGUE:
-                RogueClass rogue = new RogueClass(name, playerClass);
-            case PALADIN:
-
-        }
+        this.playerClass = playerClass;
         this.xpCalculator = new XPCalculator();
+        this.hp = 100f;
     }
     public PlayerClass isClass() {
         return this.playerClass;
@@ -58,7 +48,7 @@ public class Player extends Entity {
     }
     private void checkLevelUp() {
         int xpNeeded = xpCalculator.calculateXPRequired(level);
-        
+
         while (this.xp >= xpNeeded) {
             this.xp -= xpNeeded; // Carry over excess XP
             level++;
@@ -72,33 +62,22 @@ public class Player extends Entity {
     public int getLevel() {
         return this.level;
     }
-    public void heal(HealingPotion potion) {
-        if (this.hp == 100) {
-            System.out.println("Your health is already 100!");
-        }
-        else if (this.hp + potion.getHealingFactor() > 100){
-            this.hp = 100;
-        }
-    }
     public void addToInv(Item item) {
-        if (inventory.size() == 20) {
+        if (super.getInventorySize() == 50) {
             System.out.println("Your inventory is full!");
         }
         else {
-            this.inventory.add(item);
+            myInventory.addtoInventory(item);
         }
     }
-    public void getAllInfo() {
-        System.out.println("Xp: " + this.xp + ", " +"Hp: " + this.hp + ", " + "Name: " +  this.name + ", " + "Class: " + this.playerClass);
-    }
     public void showInventory() {
-        for (Item n : inventory) {
+        for (Item n : this.getItemsInInventory()) {
             System.out.print(n.getName() + ", ");
         }
     }
     public float calculateCritChance() {
         float baseCrit = 0.1f;
-        float agilityBonus = (float) Math.sqrt(this.agility) * 0.015f; // Raises crit chance by 1.5% per level of agility
+        float agilityBonus = (float) Math.sqrt(super.agility) * 0.015f; // Raises crit chance by 1.5% per level of agility
         return Math.min(baseCrit + agilityBonus, 0.30f);
     }
     public float calculateCritDamage() {
@@ -110,17 +89,15 @@ public class Player extends Entity {
         PlayerClass playerClass = this.playerClass;
         switch (playerClass) {
             case ROGUE:
-                float baseDamageRogue = this.currentItem.getDamage();
+                float baseDamageRogue = myInventory.getDamage();
                 if (Math.random() < critChance) {
                     float critMultiplier = this.calculateCritDamage();
                     return baseDamageRogue * critMultiplier;
                 }
                 return baseDamageRogue;
             case MAGE:
-                if (this.isClass() == PlayerClass.MAGE) {
-                    float baseDamageMage = ((Wand) currentItem).getDamage();
+                return myInventory.getDamage();
                 }
-                }
-        return 0.1f;
+        return 0.0f;
         }
     }
