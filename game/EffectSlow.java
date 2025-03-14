@@ -1,7 +1,7 @@
-public class SlowEffect implements Effect{
+public class EffectSlow implements Effect{
     private int duration;
-    private int slowMagn;
-    public SlowEffect(int duration, int slowMagn) {
+    private float slowMagn;
+    public EffectSlow(int duration, float slowMagn) {
         this.duration = duration;
         this.slowMagn = slowMagn;
     }
@@ -11,8 +11,8 @@ public class SlowEffect implements Effect{
     }
     
     @Override
-    public void decrementDuration() {
-        duration--;
+    public void decrementDuration(int ticks) {
+        duration -= ticks;
     }
 
     @Override
