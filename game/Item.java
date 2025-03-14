@@ -6,14 +6,22 @@
  * @author  @joshuacgunn on GitHub
  * @version Feb 27, 2025
  */
-public class Item {
+public abstract class Item {
     protected String name;
     protected float value;
     protected int durability;
-
-    public Item(String itemName, float value) {
+    public Entity owner;
+    protected Item equippedItem;
+    public Item(String itemName) {
         this.name = itemName;
-        this.value = value;
+        this.equippedItem = null;
+    }
+    public void initializeEquippedItem() {
+        if (this.owner != null && this.owner.inventory != null) {
+            this.equippedItem = owner.inventory.equippedItem;
+        } else {
+            this.equippedItem = null;
+        }
     }
     public String getName() {
         return this.name;
